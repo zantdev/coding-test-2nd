@@ -11,6 +11,34 @@ Parse and embed the provided **`FinancialStatement_2025_I_AADIpdf.pdf`** file, t
 
 ---
 
+## How to Complete This Assignment
+
+### 📋 **Assignment Process**
+1. **Fork this repository** to your own GitHub account
+2. **Clone your forked repository** to your local machine
+3. **Complete the coding challenge** following the requirements below
+4. **Push your completed solution** to your forked repository
+5. **Send your repository URL via email** when completed
+
+### 🚀 **Getting Started**
+```bash
+# Fork this repository on GitHub (click "Fork" button)
+# Then clone your forked repository
+git clone https://github.com/YOUR_USERNAME/coding-test-2nd.git
+cd coding-test-2nd
+
+# Start development...
+```
+
+### ✉️ **Submission**
+When you complete the assignment:
+- Ensure your code is pushed to your forked repository
+- Test that your application runs correctly
+- **Send your GitHub repository URL via email**
+- Include any additional setup instructions if needed
+
+---
+
 ## Requirements
 
 ### 1. **PDF Document Processing & RAG Pipeline (Required)**
@@ -241,10 +269,28 @@ Retrieve processed document information
 
 ## Submission
 
-1. **GitHub Repository**: Complete repository with all code and documentation
-2. **Runnable Demo**: Full system executable locally
-3. **Documentation**: Installation and execution guide, API documentation
-4. **Demo Video** (optional): System demonstration video
+### 📦 **What to Submit**
+1. **Your forked GitHub repository** with complete implementation
+2. **All source code** (frontend, backend, configurations)
+3. **Updated documentation** with any additional setup instructions
+4. **Runnable demo** that works locally
+
+### 📧 **How to Submit**
+1. **Complete your implementation** in your forked repository
+2. **Test thoroughly** to ensure everything works
+3. **Push all changes** to your GitHub repository
+4. **Send an email** with your repository URL to the designated contact
+
+### 📝 **Repository Should Include**
+- Complete frontend and backend implementation
+- All necessary configuration files
+- Clear installation and execution instructions
+- Any additional documentation or notes
+
+### 🎥 **Optional Extras**
+- **Demo video** showing your system in action
+- **Performance analysis** or optimization notes
+- **Future improvement suggestions**
 
 ---
 
