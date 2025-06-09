@@ -217,12 +217,12 @@ Retrieve processed document information
 
 ## Evaluation Criteria
 
-### 1. **RAG System Implementation (40%)**
+### 1. **RAG System Implementation (30%)**
    - PDF processing and chunking quality
    - Embedding and vector search accuracy
    - LLM integration and answer quality
 
-### 2. **Code Quality & Structure (25%)**
+### 2. **Code Quality & Structure (30%)**
    - Code readability and maintainability
    - Modularization and separation of concerns
    - Error handling and logging
@@ -232,7 +232,7 @@ Retrieve processed document information
    - Real-time feedback and loading states
    - Answer source display and reliability
 
-### 4. **Technical Implementation (15%)**
+### 4. **Technical Implementation (20%)**
    - API design and documentation
    - Performance optimization
    - Scalable architecture
