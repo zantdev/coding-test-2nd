@@ -326,4 +326,14 @@ Your system should be able to handle questions like these about the financial st
 
 ---
 
+## Implementation Details
+
+**Backend
+- `cd backend && pip install -r requirements.txt`
+- create .env file in backend put `COHERE_API_KEY` from cohere. This is selected due openai do not give free trial credits anymore.
+
+**Frontend
+- `cd frontend && npm install`
+- create .env file in frontend and put NEXT_PUBLIC_BACKEND_URL with backend localhost. For example put http://localhost:8000
+
 **Build a smarter document Q&A system with RAG technology!** 

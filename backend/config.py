@@ -6,10 +6,12 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     # OpenAI API configuration
     openai_api_key: str = os.getenv("OPENAI_API_KEY", "")
+    cohere_api_key: str = os.getenv("COHERE_API_KEY", "")
     
     # Vector database configuration
     vector_db_path: str = os.getenv("VECTOR_DB_PATH", "./vector_store")
     vector_db_type: str = os.getenv("VECTOR_DB_TYPE", "chromadb")
+    chroma_persist_dir: str = "./chroma_db"
     
     # PDF upload path
     pdf_upload_path: str = os.getenv("PDF_UPLOAD_PATH", "../data")
@@ -18,7 +20,7 @@ class Settings(BaseSettings):
     embedding_model: str = os.getenv("EMBEDDING_MODEL", "text-embedding-ada-002")
     
     # LLM configuration
-    llm_model: str = os.getenv("LLM_MODEL", "gpt-3.5-turbo")
+    llm_model: str = os.getenv("LLM_MODEL", "command-r-plus")
     llm_temperature: float = float(os.getenv("LLM_TEMPERATURE", "0.1"))
     max_tokens: int = int(os.getenv("MAX_TOKENS", "1000"))
     
@@ -27,7 +29,7 @@ class Settings(BaseSettings):
     chunk_overlap: int = int(os.getenv("CHUNK_OVERLAP", "200"))
     
     # Retrieval configuration
-    retrieval_k: int = int(os.getenv("RETRIEVAL_K", "5"))
+    retrieval_k: int = int(os.getenv("RETRIEVAL_K", "2"))
     similarity_threshold: float = float(os.getenv("SIMILARITY_THRESHOLD", "0.7"))
     
     # Server configuration

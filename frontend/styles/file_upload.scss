@@ -1,0 +1,42 @@
+.file-upload {
+  max-width: 600px;
+  margin: 0 auto;
+
+  .upload-area {
+    border: 2px dashed #aaa;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    // background: #fafbfc;
+    background: #f7f7fa;
+    transition: border-color 0.2s, background 0.2s;
+
+    &:hover,
+    &:focus {
+      border-color: #0070f3;
+      background: #f0f8ff;
+    }
+
+    span {
+      color: #555;
+      font-size: 1.1rem;
+    }
+  }
+
+  .progress-bar {
+    margin-top: 1rem;
+    width: 100%;
+    background: #eee;
+    height: 8px;
+    border-radius: 4px;
+
+    div {
+      height: 100%;
+      background: #0070f3;
+      border-radius: 4px;
+      transition: width 0.2s;
+    }
+  }
+}

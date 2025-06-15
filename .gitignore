@@ -48,3 +48,5 @@ env/
 # Temporary files
 *.tmp
 *.temp 
+data/
+backend/chroma_db/
