@@ -1,6 +1,6 @@
 import logging
 
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 import pdfplumber
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
@@ -33,7 +33,7 @@ class PDFProcessor:
         logger.info(pages_content)
         return pages_content
 
-    def split_into_chunks(self, pages_content: List[Dict[str, Any]]) -> List[Document]:
+    def split_into_chunks(self, pages_content: List[Dict[str, Any]], document_id: Optional[str] = None) -> List[Document]:
         """
         Split page content into chunks.
         Returns a list of langchain.schema.Document objects.
@@ -46,7 +46,8 @@ class PDFProcessor:
                     page_content=chunk,
                     metadata={
                         "page_num": page["page_num"],
-                        "chunk_idx": idx
+                        "chunk_idx": idx,
+                        "document_id": document_id
                     }
                 )
                 documents.append(doc)

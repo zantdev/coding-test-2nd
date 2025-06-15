@@ -60,6 +60,7 @@ async def upload_pdf(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Only PDF files are allowed.")
 
     # 2. Save uploaded file
+    document_id = str(uuid.uuid4())
     original_filename = file.filename
     sanitized_filename = re.sub(r"\s+", "-", original_filename)
     unique_filename = f"{uuid.uuid4()}_{sanitized_filename}"
@@ -76,7 +77,7 @@ async def upload_pdf(file: UploadFile = File(...)):
     pages_content = pdf_processor.extract_text_from_pdf(file_path)
 
     # 4. Split text into chunks
-    documents = pdf_processor.split_into_chunks(pages_content)
+    documents = pdf_processor.split_into_chunks(pages_content, document_id)
     processing_time = time.time() - start_time
 
     # 5. (Optional) Store documents in vector database (not implemented here)
@@ -88,7 +89,8 @@ async def upload_pdf(file: UploadFile = File(...)):
         message="Upload and processing successful.",
         filename=unique_filename,
         chunks_count=len(documents),
-        processing_time=processing_time
+        processing_time=processing_time,
+        document_id=document_id
     )
 
 
@@ -103,7 +105,8 @@ async def chat(request: ChatRequest):
     try:
         result = rag_pipeline.generate_answer(
             question=request.question,
-            chat_history=request.chat_history or []
+            chat_history=request.chat_history or [],
+            document_id=request.document_id 
         )
         return ChatResponse(
             answer=result["answer"],

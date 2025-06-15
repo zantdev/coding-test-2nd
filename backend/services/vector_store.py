@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 from langchain.schema import Document
 from langchain.vectorstores import Chroma
 from langchain.embeddings import OpenAIEmbeddings, CohereEmbeddings
@@ -30,12 +30,15 @@ class VectorStoreService:
         self.vector_store.persist()
         logger.info(f"Added {len(documents)} documents to vector store.")
 
-    def similarity_search(self, query: str, k: int = 5) -> List[Tuple[Document, float]]:
+    def similarity_search(self, query: str, k: int = 5, document_id: Optional[str] = None) -> List[Tuple[Document, float]]:
         """Search for similar documents"""
         if not query:
             logger.warning("Empty query for similarity search.")
             return []
-        results = self.vector_store.similarity_search_with_score(query, k=k)
+        if document_id:
+            results = self.vector_store.similarity_search_with_score(query, k=k, filter={"document_id": document_id})
+        else:
+            results = self.vector_store.similarity_search_with_score(query, k=k)
         logger.info(f"Found {len(results)} similar documents for query.")
         return results
 

@@ -41,7 +41,7 @@ export default function ChatInterface({ documentId }: ChatInterfaceProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           question: input,
-          documentId,
+          document_id: documentId,
         }),
       });
 

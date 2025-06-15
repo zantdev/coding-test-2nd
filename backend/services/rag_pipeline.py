@@ -3,7 +3,7 @@ import time
 import os
 
 import cohere
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 from langchain.schema import Document
 from services.vector_store import VectorStoreService
 from config import settings
@@ -23,11 +23,11 @@ class RAGPipeline:
 
         self.vector_store = VectorStoreService()
 
-    def generate_answer(self, question: str, chat_history: List[Dict[str, str]] = None) -> Dict[str, Any]:
+    def generate_answer(self, question: str, chat_history: List[Dict[str, str]] = None, document_id: Optional[str] = None) -> Dict[str, Any]:
         """Generate answer using RAG pipeline"""
         start_time = time.time()
         # 1. Retrieve relevant documents
-        retrieved_docs = self._retrieve_documents(question)
+        retrieved_docs = self._retrieve_documents(question, document_id=document_id)
         # 2. Generate context from retrieved documents
         context = self._generate_context(retrieved_docs)
         # 3. Generate answer using Cohere LLM
@@ -49,9 +49,9 @@ class RAGPipeline:
             "processing_time": processing_time,
         }
 
-    def _retrieve_documents(self, query: str) -> List[Tuple[Document, float]]:
+    def _retrieve_documents(self, query: str, document_id: Optional[str] = None) -> List[Tuple[Document, float]]:
         """Retrieve relevant documents for the query"""
-        results = self.vector_store.similarity_search(query, k=self.retrieval_k)
+        results = self.vector_store.similarity_search(query, k=self.retrieval_k, document_id=document_id)
         filtered = [
             (doc, score)
             for doc, score in results

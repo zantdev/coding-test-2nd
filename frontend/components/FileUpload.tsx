@@ -61,7 +61,7 @@ export default function FileUpload({ onUploadComplete, onUploadError }: FileUplo
           isUploading: false,
           uploadProgress: 100,
           isUploaded: true,
-          documentId: result.documentId,
+          documentId: result.document_id,
         });
         onUploadComplete?.(result);
       } else {

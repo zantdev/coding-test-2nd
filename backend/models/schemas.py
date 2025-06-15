@@ -6,6 +6,7 @@ from datetime import datetime
 class ChatRequest(BaseModel):
     question: str
     chat_history: Optional[List[Dict[str, str]]] = []
+    document_id: Optional[str] = None
 
 
 class DocumentSource(BaseModel):
@@ -34,6 +35,7 @@ class DocumentsResponse(BaseModel):
 
 class UploadResponse(BaseModel):
     message: str
+    document_id: Optional[str] = None
     filename: str
     chunks_count: int
     processing_time: float
