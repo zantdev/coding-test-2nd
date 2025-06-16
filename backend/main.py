@@ -117,12 +117,29 @@ async def chat(request: ChatRequest):
         raise HTTPException(status_code=500, detail=f"Error generating answer: {str(e)}")
 
 
-@app.get("/api/documents")
+@app.get("/api/documents", response_model=DocumentsResponse)
 async def get_documents():
     """Get list of processed documents"""
-    # TODO: Implement document listing
-    # - Return list of uploaded and processed documents
-    pass
+    vector_store = VectorStoreService()
+    collection = vector_store.vector_store._collection
+    metadatas = collection.get(include=["metadatas"]).get("metadatas", [])
+    all_metadatas = [m for sublist in metadatas for m in (sublist if isinstance(sublist, list) else [sublist]) if m]
+    doc_info = {}
+    for meta in all_metadatas:
+        doc_id = meta.get("document_id")
+        if not doc_id:
+            continue
+        if doc_id not in doc_info:
+            doc_info[doc_id] = {
+                "document_id": doc_id,
+                "filename": meta.get("filename", ""),
+                "num_chunks": 0,
+                "uploaded_at": meta.get("uploaded_at", None)
+            }
+        doc_info[doc_id]["num_chunks"] += 1
+
+    documents = list(doc_info.values())
+    return DocumentsResponse(documents=documents)
 
 
 @app.get("/api/chunks")
