@@ -4,6 +4,7 @@ type StoreState = {
   isUploaded: boolean;
   userName: string;
   documentId: string;
+  documentName: string;
   file: File | null;
   isUploading: boolean;
   uploadProgress: number;
@@ -18,6 +19,7 @@ const initialState: StoreState = {
   isUploaded: false,
   userName: '',
   documentId: '',
+  documentName: '',
   file: null,
   isUploading: false,
   uploadProgress: 0

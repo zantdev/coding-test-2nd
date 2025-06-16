@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAppContext } from '@/context/AppContext';
 import axios from 'axios';
+import DocumentPreview from './DocumentPreview';
 
 interface FileUploadProps {
   onUploadComplete?: (result: any) => void;
@@ -10,6 +11,7 @@ interface FileUploadProps {
 export default function FileUpload({ onUploadComplete, onUploadError }: FileUploadProps) {
   const {state, setState} = useAppContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     if (state.file) {
       handleUpload();
@@ -17,9 +19,6 @@ export default function FileUpload({ onUploadComplete, onUploadError }: FileUplo
   }, [state.file]);
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 1. Validate file type (PDF only)
-    // 2. Validate file size (e.g., max 10MB)
-    // 3. Set selected file
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
 
@@ -32,7 +31,6 @@ export default function FileUpload({ onUploadComplete, onUploadError }: FileUplo
       return;
     }
     setState({...state, file: selectedFile, isUploaded: true});
-    
   };
 
   const handleUpload = async () => {
@@ -62,6 +60,7 @@ export default function FileUpload({ onUploadComplete, onUploadError }: FileUplo
           uploadProgress: 100,
           isUploaded: true,
           documentId: result.document_id,
+          documentName: result.filename,
         });
         onUploadComplete?.(result);
       } else {
@@ -101,44 +100,53 @@ export default function FileUpload({ onUploadComplete, onUploadError }: FileUplo
 
   return (
     <div className="file-upload">
-      {/* Drag & Drop area */}
-      <div 
-        className="upload-area"
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        onClick={() => fileInputRef.current?.click()}
-      >
-        {/* Drag & drop UI */}
-        {state.file ? (
-          <span>{state.file.name}</span>
-        ) : (
-          <span>Drag & drop a PDF file here, or click to select</span>
-        )}
-      </div>
+      {
+        state.isUploaded && !state.isUploading ? (
+          <DocumentPreview />
+        ) : 
+        (
+          <div>
+            {/* Drag & Drop area */}
+            <div 
+              className="upload-area"
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              onClick={() => fileInputRef.current?.click()}
+            >
+              {/* Drag & drop UI */}
+              {state.file ? (
+                <span>{state.file.name}</span>
+              ) : (
+                <span>Drag & drop a PDF file here, or click to select</span>
+              )}
+            </div>
 
-      {/* File input */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept=".pdf"
-        onChange={handleFileSelect}
-        style={{ display: 'none' }}
-      />
+            {/* File input */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".pdf"
+              onChange={handleFileSelect}
+              style={{ display: 'none' }}
+            />
 
-      {/* Progress bar */}
-      {state.isUploading && (
-        <div className="progress-bar" >
-          <div
-            style={{
-              width: `${state.uploadProgress}%`,
-              height: '100%',
-              background: '#0070f3',
-              borderRadius: '4px',
-              transition: 'width 0.2s'
-            }}
-          />
-        </div>
-      )}
+            {/* Progress bar */}
+            {state.isUploading && (
+              <div className="progress-bar" >
+                <div
+                  style={{
+                    width: `${state.uploadProgress}%`,
+                    height: '100%',
+                    background: '#0070f3',
+                    borderRadius: '4px',
+                    transition: 'width 0.2s'
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        )
+      }
     </div>
   );
 }
