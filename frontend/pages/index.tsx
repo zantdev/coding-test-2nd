@@ -1,4 +1,5 @@
 import React, { useState, createContext, useContext } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Swal from 'sweetalert2'
 import FileUpload from '@/components/FileUpload';
@@ -7,6 +8,8 @@ import { useAppContext } from '@/context/AppContext';
 
 export default function Home() {
   const {state, setState} = useAppContext();
+  const router = useRouter();
+
   const handleFileUploadError = (err: string) => {
     Swal.fire({
       icon: 'error',
@@ -15,6 +18,12 @@ export default function Home() {
       confirmButtonText: 'OK'
     });
   }
+
+  const goToHistory = () => {
+    setState({...state, isUploaded: false, documentId: '', documentName: '', file: null});
+    router.push('/history')
+  }
+
   return (
     <div>
       <Head>
@@ -25,18 +34,17 @@ export default function Home() {
 
       <main>
         <h1 className="title">Welcome to the RAG-based Q&A System!</h1>
-        <p className="subtitle">Upload a financial statement PDF and start asking questions.</p>
-        {/* TODO: Implement your components here */}
+        <p className="subtitle">Upload a document PDF and start asking questions.</p>
         <FileUpload onUploadError={handleFileUploadError} />
         {
-        /* 
-          Suggested components to implement:
-          - FileUpload component for PDF upload
-          - ChatInterface component for Q&A
-          - DocumentViewer component for document display
-        */}
-        {
           state.isUploaded && !state.isUploading ? <ChatInterface documentId={state.documentId} /> : null
+        }
+        {/* this is only shown if user does not upload yet */}
+        {
+          !state.isUploaded && !state.isUploading ? <><p className="subtitle">Or</p>
+         <button className="btn-history" onClick={() => goToHistory()}>
+          View document history
+         </button></> : null
         }
       </main>
     </div>

@@ -33,7 +33,7 @@ class PDFProcessor:
         logger.info(pages_content)
         return pages_content
 
-    def split_into_chunks(self, pages_content: List[Dict[str, Any]], document_id: Optional[str] = None) -> List[Document]:
+    def split_into_chunks(self, pages_content: List[Dict[str, Any]], document_id: Optional[str] = None, filename: Optional[str] = None) -> List[Document]:
         """
         Split page content into chunks.
         Returns a list of langchain.schema.Document objects.
@@ -47,7 +47,8 @@ class PDFProcessor:
                     metadata={
                         "page_num": page["page_num"],
                         "chunk_idx": idx,
-                        "document_id": document_id
+                        "document_id": document_id,
+                        "filename": filename
                     }
                 )
                 documents.append(doc)

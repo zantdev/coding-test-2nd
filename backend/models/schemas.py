@@ -23,6 +23,7 @@ class ChatResponse(BaseModel):
 
 
 class DocumentInfo(BaseModel):
+    document_id: str
     filename: str
     upload_date: datetime
     chunks_count: int
